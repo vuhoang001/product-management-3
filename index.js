@@ -4,6 +4,8 @@ const port = 3000 || 3001;
 const routeClient = require("./routes/client/index.route")
 
 require("dotenv").config();
+
+app.use(express.static("public"))
 app.set("views", "./views")
 app.set("view engine", "pug")
 
