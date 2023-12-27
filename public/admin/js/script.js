@@ -33,3 +33,17 @@ if(searchForm){
     })
 }
 // End search form 
+
+// Pagination
+const paginationButtons = document.querySelectorAll("[button-pagination]")
+if(paginationButtons.length > 0){
+    let url = new URL(window.location.href)
+    paginationButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            let value = button.getAttribute("button-pagination")
+            url.searchParams.set("page", value)
+            window.location.href = url.href
+        })
+    })
+}
+// End pagination
