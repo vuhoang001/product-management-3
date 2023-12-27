@@ -1,16 +1,17 @@
 extends ../../layouts/default.pug
+include ../../mixins/search.pug
+include ../../mixins/filterButtons.pug
 block main 
     h1(class="mb-4") Products list 
 
     .card.mb-3 
         .card-header Filter and Search 
         .card-body 
-            each item in filterButtons
-                button(
-                    class=`btn btn-sm ml-1 btn-outline-success ${item.class}`
-                    status-data=item.status
-                ) #{item.name}
-            
+            .row
+                .col-6
+                    +filterButtons(filterButtons)
+                .col-6 
+                    +search(keyWord)
            
     table.table.table-hover.table-sm.text-center
         thead 

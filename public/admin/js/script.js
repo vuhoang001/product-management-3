@@ -17,3 +17,19 @@ if (buttonStatus.length > 0) {
     )
 }
 // End filter button
+
+// Search form
+const searchForm = document.getElementById("form-search")
+if(searchForm){
+    let url = new URL(window.location.href)
+    searchForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if(e.target.elements.keyword.value != ""){
+            url.searchParams.set("keyword", e.target.elements.keyword.value)
+        } else {
+            url.searchParams.delete("keyword")
+        }
+        window.location.href = url.href
+    })
+}
+// End search form 
