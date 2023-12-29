@@ -89,36 +89,52 @@ if (checkboxMulti) {
     checkButtons.forEach((button) => {
         button.addEventListener("click", () => {
             const buttonsCheked = checkboxMulti.querySelectorAll("input[name='id']:checked").length
-           if(buttonsCheked == checkButtons.length){
+            if (buttonsCheked == checkButtons.length) {
                 checkAll.checked = true
-           } else {
+            } else {
                 checkAll.checked = false
-           }
-        }) 
+            }
+        })
     })
 }
 // End Checkbox Multi
 
 // Form change multi 
-    const formChangeMulti = document.querySelector("[form-change-multi]")
-    if(formChangeMulti){
-        formChangeMulti.addEventListener("submit", (e) => {
-            e.preventDefault()
-            const inputCheckAll = checkboxMulti.querySelector("input[name='checkAll']")
-            const inputChecked = checkboxMulti.querySelectorAll("input[name='id']:checked")
-            if(inputChecked.length > 0){
-                let ids = []
-                const inputIDS = formChangeMulti.querySelector("input[name='ids']")
-                inputChecked.forEach(item => {
-                    ids.push(item.value)
-                })
-                
-                inputIDS.value = ids.join(', ')
-                formChangeMulti.submit()
-                
-            } else {
-                alert("Insert value!")
+const formChangeMulti = document.querySelector("[form-change-multi]")
+if (formChangeMulti) {
+    formChangeMulti.addEventListener("submit", (e) => {
+        e.preventDefault()
+        const inputCheckAll = checkboxMulti.querySelector("input[name='checkAll']")
+        const inputChecked = checkboxMulti.querySelectorAll("input[name='id']:checked")
+        if (inputChecked.length > 0) {
+            let ids = []
+            const inputIDS = formChangeMulti.querySelector("input[name='ids']")
+            inputChecked.forEach(item => {
+                ids.push(item.value)
+            })
+
+            inputIDS.value = ids.join(', ')
+            formChangeMulti.submit()
+
+        } else {
+            alert("Insert value!")
+        }
+    })
+}
+// End form change multi
+
+const formDelete = document.querySelector("#form-delete-button")
+const buttonDelete = document.querySelectorAll("[delete-button]")
+const path = formDelete.getAttribute("data-path")
+if (formDelete) {
+    buttonDelete.forEach(button => {
+        button.addEventListener("click", () => {
+            if(confirm("aur?") == true){
+                const id = button.getAttribute("data-id")
+                const action = `${path}/${id}?_method=DELETE`
+                formDelete.setAttribute("action", action)
+                formDelete.submit()
             }
         })
-    }
-// End form change multi
+    })
+}
