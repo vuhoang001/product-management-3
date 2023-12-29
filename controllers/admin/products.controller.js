@@ -2,6 +2,8 @@ const products = require("../../model/products.model")
 const filterButtonHelpers = require("../../helpers/filterButton.helper")
 const searchFormHelpers = require("../../helpers/searchForm.helper")
 const paginationObjectHelpers = require("../../helpers/pagination.helper")
+
+// [GET] admin/products
 module.exports.index = async (req, res) => {
     const find = {
         deleted: false
@@ -38,4 +40,23 @@ module.exports.index = async (req, res) => {
         keyWord: searchForm.keyword, 
         pagination: paginationObject
     })
+}
+
+//[PATCH] admin/products/change-status/:status/:id
+
+module.exports.changeStatus = async (req, res) => {
+   const status = req.params.status
+   const id = req.params.id
+   await products.updateOne({_id: id}, {status: status})
+   res.redirect("back")
+}
+
+//[PATCH] admin/products/changeMulti 
+
+module.exports.changeMulti = async (req, res) => {
+
+    const type = req.body.type
+    const ids = req.body.ids.split(", ")
+    await products.updateMany({_id: {$in: ids}}, {status: type})
+    res.redirect("back")
 }

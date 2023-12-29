@@ -6,7 +6,11 @@ const routeAdmin = require("./routes/admin/index.route")
 const systemPath = require("./config/system")
 const database = require("./config/database");
 require("dotenv").config();
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(methodOverride('_method'))
 app.use(express.static("public"));
 app.set("views", "./views");
 app.set("view engine", "pug");

@@ -2,9 +2,10 @@ extends ../../layouts/default.pug
 include ../../mixins/search.pug
 include ../../mixins/filterButtons.pug
 include ../../mixins/pagination.pug
+include ../../mixins/multiStatus.pug
 block main 
     h1(class="mb-4") Products list 
-
+    +multiStatus(`/${prefixAdmin}/products/change-multi?_method=PATCH`)
     .card.mb-3 
         .card-header Filter and Search 
         .card-body 
@@ -14,10 +15,15 @@ block main
                 .col-6 
                     +search(keyWord)
            
-    table.table.table-hover.table-sm.text-center
+    table(
+        class="table table-hover table-sm text-center"
+        checkboxMulti
+    )
         thead 
             tr 
-                th STT 
+                th  
+                    input(type="checkbox" name="checkAll")
+                th Index
                 th Image 
                 th Title 
                 th Price 
@@ -26,6 +32,12 @@ block main
         tbody 
             each item, index in products
                 tr 
+                    td 
+                        input(
+                            type="checkbox"
+                            name="id"
+                            value=item.id
+                        )
                     td #{index + 1}
                     td
                         img(
@@ -38,11 +50,31 @@ block main
                     td #{item.price} 
                     td 
                         if item.status == "active"
-                            a(href="active" class="badge badge-success") Active 
+                            button(
+                                        class="badge badge-success"
+                                        button-change-status 
+                                        data-status=item.status 
+                                        data-id=item.id    
+                                    ) Active
                         else 
-                            a(href="inactive" class="badge badge-danger") Inactive
+                            button(
+                                        class="badge badge-danger"
+                                        button-change-status 
+                                        data-status=item.status 
+                                        data-id=item.id 
+                                    ) Inactive
                     td 
                         button(class="btn btn-warning btn-sm") Edit 
-                        button(class="btn btn-danger btn-sm ml-1") Delete
-    
+                        button(
+                            class="btn btn-danger btn-sm ml-1"
+                        ) Delete
+                    form(
+                        id="form-change-status"
+                        method="POST"
+                        action=""
+                        data-path=`/${prefixAdmin}/products/change-status`
+                    )
     +pagination(pagination)
+
+    
+    
