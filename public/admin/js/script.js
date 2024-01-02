@@ -104,8 +104,16 @@ const formChangeMulti = document.querySelector("[form-change-multi]")
 if (formChangeMulti) {
     formChangeMulti.addEventListener("submit", (e) => {
         e.preventDefault()
-        const inputCheckAll = checkboxMulti.querySelector("input[name='checkAll']")
         const inputChecked = checkboxMulti.querySelectorAll("input[name='id']:checked")
+
+        const typeChange = e.target.elements.type.value
+
+        if (typeChange == 'delete-all') {
+            const confirmQ = confirm("aur");
+            if (!confirmQ)
+                return;
+        }
+
         if (inputChecked.length > 0) {
             let ids = []
             const inputIDS = formChangeMulti.querySelector("input[name='ids']")
@@ -129,7 +137,7 @@ const path = formDelete.getAttribute("data-path")
 if (formDelete) {
     buttonDelete.forEach(button => {
         button.addEventListener("click", () => {
-            if(confirm("aur?") == true){
+            if (confirm("aur?") == true) {
                 const id = button.getAttribute("data-id")
                 const action = `${path}/${id}?_method=DELETE`
                 formDelete.setAttribute("action", action)
