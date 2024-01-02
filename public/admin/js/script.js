@@ -104,7 +104,6 @@ const formChangeMulti = document.querySelector("[form-change-multi]")
 if (formChangeMulti) {
     formChangeMulti.addEventListener("submit", (e) => {
         e.preventDefault()
-        const inputCheckAll = checkboxMulti.querySelector("input[name='checkAll']")
         const inputChecked = checkboxMulti.querySelectorAll("input[name='id']:checked")
 
         const typeChange = e.target.elements.type.value
