@@ -27,6 +27,7 @@ block main
                 th Image 
                 th Title 
                 th Price 
+                th Position
                 th Status 
                 th Action 
         tbody 
@@ -48,6 +49,14 @@ block main
                         )
                     td #{item.title}
                     td #{item.price} 
+                    td 
+                        input(
+                            type="number"
+                            min="1"
+                            value=item.position
+                            style="width: 60px"
+                            name="position" 
+                        )
                     td 
                         if item.status == "active"
                             button(
