@@ -171,6 +171,6 @@ if (showAlter) {
 }
 // End show success
 
-// Create new product
+// Preview image
 
-// End create new product 
+// End preview image 

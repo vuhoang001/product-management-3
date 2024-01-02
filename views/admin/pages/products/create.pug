@@ -1,7 +1,7 @@
 extends ../../layouts/default.pug
 
 block main 
-    h1(class="mb-4") Create products
+    h1(class="mb-4 lahoangday") Create products
 
     form(
         action=`/${prefixAdmin}/products/create`
@@ -58,7 +58,9 @@ block main
                 min="0"
             ) 
 
-        div(class="form-group")
+        div(class="form-group"
+            upload-image
+        )
             label(for="thumbnail") Picture 
             input(
                 type="file"
@@ -66,7 +68,13 @@ block main
                 id="thumbnail"
                 name="thumbnail"
                 accept="image/*"
+                upload-image-input
             ) 
+            img(
+                src=""
+                class="image-preview"
+                upload-image-preview
+            )
 
         div(class="form-group")
             label(for="position") Position 
@@ -105,3 +113,5 @@ block main
                 type="submit"
                 class="btn btn-primary"
             ) Create
+
+    script(src="/admin/js/products.js") 
