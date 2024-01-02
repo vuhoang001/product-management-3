@@ -170,3 +170,7 @@ if (showAlter) {
     })
 }
 // End show success
+
+// Create new product
+
+// End create new product 

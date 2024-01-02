@@ -8,7 +8,6 @@ block main
     
     +alterSuccess(3000)
     h1(class="mb-4") Products list 
-    +multiStatus(`/${prefixAdmin}/products/change-multi?_method=PATCH`)
     .card.mb-3 
         .card-header Filter and Search 
         .card-body 
@@ -17,83 +16,96 @@ block main
                     +filterButtons(filterButtons)
                 .col-6 
                     +search(keyWord)
-           
-    table(
-        class="table table-hover table-sm text-center"
-        checkboxMulti
-    )
-        thead 
-            tr 
-                th  
-                    input(type="checkbox" name="checkAll")
-                th Index
-                th Image 
-                th Title 
-                th Price 
-                th Position
-                th Status 
-                th Action 
-        tbody 
-            each item, index in products
-                tr 
-                    td 
-                        input(
-                            type="checkbox"
-                            name="id"
-                            value=item.id
-                        )
-                    td #{index + 1}
-                    td
-                        img(
-                            src="/admin/image/lofi.jpg"
-                            alt= item.title
-                            width="100px"
-                            height="auto"
-                        )
-                    td #{item.title}
-                    td #{item.price} 
-                    td 
-                        input(
-                            type="number"
-                            min="1"
-                            value=item.position
-                            style="width: 60px"
-                            name="position" 
-                        )
-                    td 
-                        if item.status == "active"
-                            button(
-                                        class="badge badge-success"
-                                        button-change-status 
-                                        data-status=item.status 
-                                        data-id=item.id    
-                                    ) Active
-                        else 
-                            button(
-                                        class="badge badge-danger"
-                                        button-change-status 
-                                        data-status=item.status 
-                                        data-id=item.id 
-                                    ) Inactive
-                    td 
-                        button(class="btn btn-warning btn-sm") Edit 
-                        button(
-                            class="btn btn-danger btn-sm ml-1"
-                            delete-button 
-                            data-id=item.id
-                        ) Delete
-                    form(
-                        id="form-delete-button"
-                        method="POST"
-                        action=""
-                        data-path=`/${prefixAdmin}/products/delete`
-                    )
-                    form(
-                        id="form-change-status"
-                        method="POST"
-                        action=""
-                        data-path=`/${prefixAdmin}/products/change-status`
-                    )
+
+    .card.mb-3
+        .card-header 
+            a LIST  
+        .card-body
+            .row    
+                .col-8  
+                    +multiStatus(`/${prefixAdmin}/products/change-multi?_method=PATCH`)
+                .col-4
+                    .d-flex
+                        a(
+                            href=`/${prefixAdmin}/products/create`
+                            class="btn btn-outline-success ml-auto"    
+                        ) + Create
+            table(
+                class="table table-hover table-sm text-center"
+                checkboxMulti
+            )
+                thead 
+                    tr 
+                        th  
+                            input(type="checkbox" name="checkAll")
+                        th Index
+                        th Image 
+                        th Title 
+                        th Price 
+                        th Position
+                        th Status 
+                        th Action 
+                tbody 
+                    each item, index in products
+                        tr 
+                            td 
+                                input(
+                                    type="checkbox"
+                                    name="id"
+                                    value=item.id
+                                )
+                            td #{index + 1}
+                            td
+                                img(
+                                    src="/admin/image/lofi.jpg"
+                                    alt= item.title
+                                    width="100px"
+                                    height="auto"
+                                )
+                            td #{item.title}
+                            td #{item.price} 
+                            td 
+                                input(
+                                    type="number"
+                                    min="1"
+                                    value=item.position
+                                    style="width: 60px"
+                                    name="position" 
+                                )
+                            td 
+                                if item.status == "active"
+                                    button(
+                                                class="badge badge-success"
+                                                button-change-status 
+                                                data-status=item.status 
+                                                data-id=item.id    
+                                            ) Active
+                                else 
+                                    button(
+                                                class="badge badge-danger"
+                                                button-change-status 
+                                                data-status=item.status 
+                                                data-id=item.id 
+                                            ) Inactive
+                            td 
+                                button(class="btn btn-warning btn-sm") Edit 
+                                button(
+                                    class="btn btn-danger btn-sm ml-1"
+                                    delete-button 
+                                    data-id=item.id
+                                ) Delete
+                            form(
+                                id="form-delete-button"
+                                method="POST"
+                                action=""
+                                data-path=`/${prefixAdmin}/products/delete`
+                            )
+                            form(
+                                id="form-change-status"
+                                method="POST"
+                                action=""
+                                data-path=`/${prefixAdmin}/products/change-status`
+                            )
     +pagination(pagination)
 
     

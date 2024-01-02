@@ -2,7 +2,7 @@ const products = require("../../model/products.model")
 const filterButtonHelpers = require("../../helpers/filterButton.helper")
 const searchFormHelpers = require("../../helpers/searchForm.helper")
 const paginationObjectHelpers = require("../../helpers/pagination.helper")
-
+const pathSystem = require("../../config/system")
 // [GET] admin/products
 module.exports.index = async (req, res) => {
     const find = {
@@ -88,4 +88,29 @@ module.exports.delete = async (req, res) => {
     })
     req.flash("success", "Successfully!")
     res.redirect("back")
+}
+
+//[GET] admin/products/create
+module.exports.create = (req, res) => {
+    res.render("admin/pages/products/create.pug")
+}
+
+
+// [POST] admin/products/create 
+
+module.exports.createPost = async (req, res) => {
+    req.body.price = parseInt(req.body.price)
+    req.body.discountPercentage = parseInt(req.body.discountPercentage)
+    req.body.stock = parseInt(req.body.stock)
+    if (req.body.position == "") {
+        const count = await products.countDocuments()
+        req.body.position = count + 1
+    } else {
+        req.body.position = parseInt(req.body.position)
+    }
+
+    const product = new products(req.body);
+    await product.save(product);
+    req.flash("success", "Successfully!")
+    res.redirect(`/${pathSystem.admin_path}/products`)
 }
