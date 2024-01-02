@@ -1,6 +1,8 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/alter.pug
 block main 
+    +alterSuccess(3000)
+    +alterError(3000)
     h1(class="mb-4 lahoangday") Create products
 
     form(
