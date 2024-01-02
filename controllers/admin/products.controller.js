@@ -51,6 +51,7 @@ module.exports.changeStatus = async (req, res) => {
     const status = req.params.status
     const id = req.params.id
     await products.updateOne({ _id: id }, { status: status })
+    req.flash("success", "Successfully!")
     res.redirect("back")
 }
 
@@ -62,13 +63,16 @@ module.exports.changeMulti = async (req, res) => {
     const ids = req.body.ids.split(", ")
     if (type == "active" || type == "inactive") {
         await products.updateMany({ _id: { $in: ids } }, { status: type })
+        req.flash("success", "Successfully!")
     } else if (type == "delete-all") {
         await products.updateMany({ _id: { $in: ids } }, { deleted: true }, { deletedAt: new Date() })
+        req.flash("success", "Successfully!")
     } else if (type == "change-position") {
         for (const item of ids) {
             const [id, position] = item.split("-")
             await products.updateOne({ _id: id }, { position: position })
         }
+        req.flash("success", "Successfully!")
     }
     res.redirect("back")
 }
@@ -82,6 +86,6 @@ module.exports.delete = async (req, res) => {
         deleted: true,
         deletedAt: new Date()
     })
-
+    req.flash("success", "Successfully!")
     res.redirect("back")
 }

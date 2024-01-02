@@ -1,5 +1,5 @@
 /* Header */
-.header{
+.header {
     background: #202020;
     padding: 10px 0px;
     position: sticky;
@@ -12,25 +12,27 @@
     font-weight: 700;
     color: #fff;
 }
+
 /* End-Header */
 
 /* body  */
-.body .slider{
+.body .slider {
     width: 150px;
     background: #323232;
     color: #fff;
     height: calc(100vh - 56px);
-    position: fixed; 
+    position: fixed;
     top: 56px;
     left: 0;
 }
 
-.body .main{
+.body .main {
     margin: 15px;
     position: relative;
     left: 150px;
     width: calc((100% - 180px));
 }
+
 /* end-body */
 
 /* slider */
@@ -46,3 +48,81 @@
     padding: 6px 12px;
     border-bottom: 1px solid #515151;
 }
+
+
+
+
+/* show alter  */
+
+[show-alter] {
+
+    position: fixed;
+
+    top: 70px;
+
+    right: 15px;
+
+    z-index: 999;
+
+}
+
+
+
+
+[show-alter].hidden-alter {
+
+    animation-name: hidden-alter;
+
+    animation-duration: 0.5s;
+
+    animation-fill-mode: both;
+
+}
+
+
+
+
+@keyframes hidden-alter {
+
+    from {
+
+        right: 15px;
+
+    }
+
+    to {
+
+        right: -100%;
+
+        display: none;
+
+    }
+
+}
+
+
+
+
+[show-alter] [close-alter] {
+
+    background: #ffffffcd;
+
+    display: inline-block;
+
+    width: 24px;
+
+    height: 24px;
+
+    line-height: 24px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+}
+
+/* end show alter */

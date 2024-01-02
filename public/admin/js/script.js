@@ -154,3 +154,19 @@ if (formDelete) {
         })
     })
 }
+
+
+// Show success
+const showAlter = document.querySelector("[show-alter]")
+if (showAlter) {
+    const spanClose = showAlter.querySelector("[close-alter]")
+    const showTime = parseInt(showAlter.getAttribute("data-time"));
+    setTimeout(() => {
+        showAlter.classList.add("hidden-alter")
+    }, showTime);
+
+    spanClose.addEventListener("click", () => {
+        showAlter.classList.add("hidden-alter")
+    })
+}
+// End show success

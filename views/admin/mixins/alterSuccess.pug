@@ -1,0 +1,7 @@
+mixin alterSuccess(time)
+    - if(messages.success)
+        div(
+            class="alert alert-success" 
+            show-alter 
+            data-time=time
+        ) #{messages.success} <span close-alter>  x  </span>
