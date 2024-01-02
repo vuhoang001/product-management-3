@@ -6,6 +6,7 @@ const routeAdmin = require("./routes/admin/index.route")
 const systemPath = require("./config/system")
 const database = require("./config/database");
 require("dotenv").config();
+
 const flash = require("express-flash")
 const cookieParser = require("cookie-parser")
 const session = require("express-session")
