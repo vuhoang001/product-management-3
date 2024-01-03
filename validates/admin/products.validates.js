@@ -5,10 +5,10 @@ module.exports.createPost = (req, res, next) => {
         return;
     }
 
-    if (!req.body.title.length < 5) {
-        req.flash("error", "ERROR!")
+    if (req.body.title.length < 6) {
+        req.flash("error", "ERROR 1")
         res.redirect("back")
-        return
+        return;
     }
-    next()
+    next();
 }

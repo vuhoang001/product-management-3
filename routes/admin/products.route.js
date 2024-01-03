@@ -14,4 +14,7 @@ router.patch("/change-multi", productsController.changeMulti)
 router.delete("/delete/:id", productsController.delete)
 router.get("/create", productsController.create)
 router.post("/create", upload.single("thumbnail"), validates.createPost, productsController.createPost)
+router.get("/edit/:id", productsController.edit)
+router.patch("/edit/:id", upload.single("thumbnail"), validates.createPost, productsController.editPatch)
+router.get("/detail/:id", productsController.detail)
 module.exports = router

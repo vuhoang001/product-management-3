@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug
+
+block main
+    if(products.title)
+        h1(class="mb-4") #{products.title}
+
+
+    if(products.price)
+        h1(class="mb-4") PRICE: #{products.price}
+
+
+    if(products.discountPercentage)
+        h1(class="mb-4") DISCOUNT: #{products.discountPercentage}
+
+    if(products.stock)
+        h1(class="mb-4") STOCK: #{products.stock} 
+
+    if(products.thumbnail)
+        div(class="mb-4")
+            img(
+                src=products.thumbnail 
+                style="width:100px"
+            ) 
+
+
+    if(products.status)
+        div(class="mb-4")
+            if(products.status ==- "active")
+                span(class="badge badge-success") Active
+            else 
+                span(class="badge badge-danger") Inactive
+
+    if(products.position)
+        h1(class="mb-4") POSITION: #{products.position}
+
+    if(products.description)
+        h1(class="mb-4") DESCRIPTION: #{products.description}
+

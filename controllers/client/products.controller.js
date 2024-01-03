@@ -9,9 +9,17 @@ module.exports.index = async (req, res) => {
         item.price = ((item.price * (100 - item.discountPercentage)) / 100).toFixed(2)
         return item;
     })
-    
+
     res.render("client/pages/products/index.pug", {
         pageTitle: "Products list",
         products: newArray
+    })
+}
+// [GET] products/detail/:slug
+module.exports.detail = async (req, res) => {
+    const slug = req.params.slug
+    const Product = await products.findOne({ slug: slug }, { deleted: false })
+    res.render("client/pages/products/detail.pug", {
+        products: Product
     })
 }
