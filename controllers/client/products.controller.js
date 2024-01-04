@@ -18,7 +18,7 @@ module.exports.index = async (req, res) => {
 // [GET] products/detail/:slug
 module.exports.detail = async (req, res) => {
     const slug = req.params.slug
-    const Product = await products.findOne({ slug: slug }, { deleted: false })
+    const Product = await products.findOne({ slug: slug }, { deleted: false }, { status: "active" })
     res.render("client/pages/products/detail.pug", {
         products: Product
     })

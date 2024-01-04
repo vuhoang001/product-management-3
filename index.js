@@ -15,11 +15,11 @@ const methodOverride = require('method-override')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(methodOverride('_method'))
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/public`));
 app.use(flash())
 app.use(cookieParser("Stringramdom"))
 app.use(session({ cookie: { maxAge: 6000 } }));
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 database.connect();
