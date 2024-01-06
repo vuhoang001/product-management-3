@@ -174,3 +174,25 @@ if (showAlter) {
 // Preview image
 
 // End preview image 
+
+// Sort 
+const sortForm = document.querySelector("[sort]")
+if (sortForm) {
+    const url = new URL(window.location.href)
+    const sortSelected = sortForm.querySelector("[sort-select]")
+    sortSelected.addEventListener("change", (e) => {
+        const [sortKey, valueKey] = e.target.value.split("-");
+        url.searchParams.set("sortKey", sortKey)
+        url.searchParams.set("sortValue", valueKey)
+        window.location.href = url.href
+    })
+
+    const sortKey = url.searchParams.get("sortKey")
+    const valueKey = url.searchParams.get("sortValue")
+    if (sortKey && valueKey) {
+        const stringValue = `${sortKey}-${valueKey}`
+        const optionSelected = sortSelected.querySelector(`option[value='${stringValue}']`)
+        optionSelected.selected = true
+    }
+}
+// End sort 

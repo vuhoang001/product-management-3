@@ -17,6 +17,26 @@ block main
                 .col-6 
                     +search(keyWord)
 
+    .card.mb-3 
+        .card-header Sort 
+        .card-body 
+            .row 
+                .col-4  
+                    div(sort)
+                        select(class="form-control"
+                            name="sort"
+                            sort-select
+                        )
+                            option(value="position-desc") Sort by descending position 
+                            option(value="position-asc") Sort by ascending position
+                            option(value="price-desc") Sort by descending price
+                            option(value="price-asc") Sort by ascending price
+                            option(value="title-desc") Sort by descending title  
+                            option(value="title-asc") Sort by ascending title
+                        button(
+                            class="btn btn-danger mt-2"
+                            sort-clear
+                        ) Clear
     .card.mb-3
         .card-header 
             a LIST  
