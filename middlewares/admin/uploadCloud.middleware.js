@@ -8,6 +8,7 @@ cloudinary.config({
 });
 module.exports.upload = (req, res, next) => {
     if (req.file) {
+        console.log(req.file)
         let streamUpload = (req) => {
             return new Promise((resolve, reject) => {
                 let stream = cloudinary.uploader.upload_stream(
@@ -31,6 +32,7 @@ module.exports.upload = (req, res, next) => {
         }
         upload(req);
     } else {
+        console.log(req.file)
         next()
     }
 }

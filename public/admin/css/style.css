@@ -17,7 +17,7 @@
 
 /* body  */
 .body .slider {
-    width: 150px;
+    width: 180px;
     background: #323232;
     color: #fff;
     height: calc(100vh - 56px);
@@ -27,9 +27,9 @@
 }
 
 .body .main {
-    margin: 15px;
+    padding: 15px;
     position: relative;
-    left: 150px;
+    left: 180px;
     width: calc((100% - 180px));
 }
 

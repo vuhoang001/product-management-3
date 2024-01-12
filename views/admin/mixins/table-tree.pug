@@ -1,0 +1,72 @@
+mixin table-tree(items, level = 1)
+    each item, index in items
+        - const preFix = Array(level + 1).join('- ')
+        tr 
+            td 
+                input(
+                    type="checkbox"
+                    name="id"
+                    value=item.id
+                )
+            td #{item.index}
+            td
+                img(
+                    src=item.thumbnail
+                    alt= item.title
+                    width="100px"
+                    height="auto"
+                )
+            td #{preFix}#{item.title}
+            td 
+                input(
+                    type="number"
+                    min="1"
+                    value=item.position
+                    style="width: 60px"
+                    name="position" 
+                )
+            td 
+                if item.status == "active"
+                    button(
+                                class="badge badge-success"
+                                button-change-status 
+                                data-status=item.status 
+                                data-id=item.id    
+                            ) Active
+                else 
+                    button(
+                                class="badge badge-danger"
+                                button-change-status 
+                                data-status=item.status 
+                                data-id=item.id 
+                            ) Inactive
+            td 
+                a(
+                    href=`/${prefixAdmin}/products-category/edit/${item.id}`
+                    class="btn btn-warning btn-sm"
+                    ) Edit 
+                button(
+                    class="btn btn-danger btn-sm ml-1"
+                    delete-button 
+                    data-id=item.id
+                ) Delete
+                a(
+                    href=`/${prefixAdmin}/products-category/detail/${item.id}`
+                    class="btn btn-secondary btn-sm ml-1"
+                    detail-button 
+                    data-id=item.id
+                ) Detail 
+            form(
+                id="form-delete-button"
+                method="POST"
+                action=""
+                data-path=`/${prefixAdmin}/products/delete`
+            )
+            form(
+                id="form-change-status"
+                method="POST"
+                action=""
+                data-path=`/${prefixAdmin}/products-category/change-status`
+            )
+            if item.children && item.children.length > 0
+                +table-tree(item.children, level + 1)
