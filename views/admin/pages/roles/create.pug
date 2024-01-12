@@ -1,0 +1,35 @@
+extends ../../layouts/default.pug 
+
+block main  
+    h1(class='mb-4') Create permission 
+
+
+    form(
+        action=`/${prefixAdmin}/roles/createPost`
+        method='POST'
+    )
+        div(class='form-group')
+            label(for="title") Title
+            input(
+                type='text'
+                class='form-control'
+                id='title'
+                name='title'
+                required
+            ) 
+
+        div(class='form-group')
+            label(for="title") Description
+            input(
+                type='text'
+                class='form-control'
+                id='desc'
+                name='description'
+            ) 
+        
+        div(class='form-group')
+            button(
+                type='submit'
+                class='btn btn-primary'
+            ) Create
+    
