@@ -25,3 +25,23 @@ module.exports.createPost = async (req, res) => {
     req.flash('success', 'Successfully !')
     res.redirect(`/${pathSystem.admin_path}/roles`)
 }
+
+// [GET] admin/roles/edit/:id 
+module.exports.edit = async (req, res) => {
+    const id = req.params.id;
+    const record = await Role.findOne({ _id: id, deleted: false })
+    res.render('admin/pages/roles/edit', {
+        pageTitle: 'Edit permission',
+        data: record
+    })
+}
+
+// [PATCH] admin/roles/editPatch/:id 
+module.exports.editPatch = async (req, res) => {
+    const id = req.params.id
+
+    await Role.updateOne({ _id: id }, req.body)
+
+    req.flash('success', 'Successfully !')
+    res.redirect(`/${pathSystem.admin_path}/roles`)
+}
