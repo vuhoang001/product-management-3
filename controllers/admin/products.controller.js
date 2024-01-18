@@ -2,6 +2,7 @@ const products = require("../../model/products.model")
 const filterButtonHelpers = require("../../helpers/filterButton.helper")
 const searchFormHelpers = require("../../helpers/searchForm.helper")
 const paginationObjectHelpers = require("../../helpers/pagination.helper")
+const Account = require('../../model/accounts.model')
 const pathSystem = require("../../config/system")
 
 // [GET] admin/products
@@ -47,6 +48,17 @@ module.exports.index = async (req, res) => {
         .sort(sort)
         .limit(paginationObject.limitItems)
         .skip(paginationObject.skip);
+
+    for (const item of Products) {
+        const user = await Account.findOne({
+            _id: item.createdBy.account_id
+        })
+
+        if (user) {
+            item.createdBy.fullName = user.fullName
+        }
+    }
+
     res.render("admin/pages/products/index.pug", {
         pageTitle: "Products Admin",
         products: Products,
@@ -57,7 +69,6 @@ module.exports.index = async (req, res) => {
 }
 
 //[PATCH] admin/products/change-status/:status/:id
-
 module.exports.changeStatus = async (req, res) => {
     const status = req.params.status
     const id = req.params.id
@@ -67,7 +78,6 @@ module.exports.changeStatus = async (req, res) => {
 }
 
 //[PATCH] admin/products/changeMulti 
-
 module.exports.changeMulti = async (req, res) => {
 
     const type = req.body.type
@@ -89,7 +99,6 @@ module.exports.changeMulti = async (req, res) => {
 }
 
 //[DELETE] admin/products/delete/:id
-
 module.exports.delete = async (req, res) => {
     const id = req.params.id
 
@@ -110,8 +119,9 @@ module.exports.create = (req, res) => {
 
 
 // [POST] admin/products/createPost
-
 module.exports.createPost = async (req, res) => {
+    console.log(res.locals.user.id)
+
     req.body.price = parseInt(req.body.price)
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
     req.body.stock = parseInt(req.body.stock)
@@ -122,9 +132,10 @@ module.exports.createPost = async (req, res) => {
         req.body.position = parseInt(req.body.position)
     }
 
-    // if (req.file && req.file.filename) {
-    //     req.body.thumbnail = `/uploads/${req.file.filename}`
-    // }
+    req.body.createdBy = {
+        account_id: res.locals.user.id
+    }
+
     const product = new products(req.body);
     await product.save(product);
     req.flash("success", "Successfully!")

@@ -5,6 +5,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/multiStatus.pug
 include ../../mixins/alter.pug
 include ../../mixins/sort.pug
+include ../../mixins/time.pug
 block main 
     if(role.permissions.includes("products_view"))
         +alterSuccess(3000)
@@ -52,6 +53,7 @@ block main
                             th Price 
                             th Position
                             th Status 
+                            th Created by
                             th Action 
                     tbody 
                         each item, index in products
@@ -80,6 +82,7 @@ block main
                                         style="width: 60px"
                                         name="position" 
                                     )
+                                
                                 td 
                                     if item.status == "active"
                                         button(
@@ -95,6 +98,11 @@ block main
                                                     data-status=item.status 
                                                     data-id=item.id 
                                                 ) Inactive
+                            
+                                td  
+                                    div #{item.createdBy.fullName}
+                                    +Date(item.createdBy.createdAt)
+                                
                                 td 
                                     if(role.permissions.includes("products_edit"))
                                         a(

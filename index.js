@@ -6,6 +6,7 @@ const routeClient = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route")
 const systemPath = require("./config/system")
 const database = require("./config/database");
+const moment = require('moment')
 require("dotenv").config();
 
 const flash = require("express-flash")
@@ -30,6 +31,7 @@ app.set("view engine", "pug");
 database.connect();
 
 app.locals.prefixAdmin = systemPath.admin_path
+app.locals.moment = moment
 routeClient(app);
 routeAdmin(app)
 app.listen(port, () => {
