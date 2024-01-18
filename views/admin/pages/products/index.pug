@@ -6,123 +6,126 @@ include ../../mixins/multiStatus.pug
 include ../../mixins/alter.pug
 include ../../mixins/sort.pug
 block main 
-    
-    +alterSuccess(3000)
-    h1(class="mb-4") Products list 
-    .card.mb-3 
-        .card-header Filter and Search 
-        .card-body 
-            .row
-                .col-6
-                    +filterButtons(filterButtons)
-                .col-6 
-                    +search(keyWord)
+    if(role.permissions.includes("products_view"))
+        +alterSuccess(3000)
+        h1(class="mb-4") Products list 
+        .card.mb-3 
+            .card-header Filter and Search 
+            .card-body 
+                .row
+                    .col-6
+                        +filterButtons(filterButtons)
+                    .col-6 
+                        +search(keyWord)
 
-    .card.mb-3 
-        .card-header Sort 
-        .card-body 
-            .row 
-                .col-4  
-                    +sort()
-    .card.mb-3
-        .card-header 
-            a LIST  
-        .card-body
-            .row    
-                .col-8  
-                    +multiStatus(`/${prefixAdmin}/products/change-multi?_method=PATCH`)
-                .col-4
-                    .d-flex
-                        a(
-                            href=`/${prefixAdmin}/products/create`
-                            class="btn btn-outline-success ml-auto"    
-                        ) + Create
-            table(
-                class="table table-hover table-sm text-center"
-                checkboxMulti
-            )
-                thead 
-                    tr 
-                        th  
-                            input(type="checkbox" name="checkAll")
-                        th Index
-                        th Image 
-                        th Title 
-                        th Price 
-                        th Position
-                        th Status 
-                        th Action 
-                tbody 
-                    each item, index in products
+        .card.mb-3 
+            .card-header Sort 
+            .card-body 
+                .row 
+                    .col-4  
+                        +sort()
+        .card.mb-3
+            .card-header 
+                a LIST  
+            .card-body
+                .row    
+                    .col-8  
+                        +multiStatus(`/${prefixAdmin}/products/change-multi?_method=PATCH`)
+                    .col-4
+                        .d-flex
+                            if(role.permissions.includes("products_create"))
+                                a(
+                                    href=`/${prefixAdmin}/products/create`
+                                    class="btn btn-outline-success ml-auto"    
+                                ) + Create
+                table(
+                    class="table table-hover table-sm text-center"
+                    checkboxMulti
+                )
+                    thead 
                         tr 
-                            td 
-                                input(
-                                    type="checkbox"
-                                    name="id"
-                                    value=item.id
+                            th  
+                                input(type="checkbox" name="checkAll")
+                            th Index
+                            th Image 
+                            th Title 
+                            th Price 
+                            th Position
+                            th Status 
+                            th Action 
+                    tbody 
+                        each item, index in products
+                            tr 
+                                td 
+                                    input(
+                                        type="checkbox"
+                                        name="id"
+                                        value=item.id
+                                    )
+                                td #{index + 1}
+                                td
+                                    img(
+                                        src=item.thumbnail
+                                        alt= item.title
+                                        width="100px"
+                                        height="auto"
+                                    )
+                                td #{item.title}
+                                td #{item.price} 
+                                td 
+                                    input(
+                                        type="number"
+                                        min="1"
+                                        value=item.position
+                                        style="width: 60px"
+                                        name="position" 
+                                    )
+                                td 
+                                    if item.status == "active"
+                                        button(
+                                                    class="badge badge-success"
+                                                    button-change-status 
+                                                    data-status=item.status 
+                                                    data-id=item.id    
+                                                ) Active
+                                    else 
+                                        button(
+                                                    class="badge badge-danger"
+                                                    button-change-status 
+                                                    data-status=item.status 
+                                                    data-id=item.id 
+                                                ) Inactive
+                                td 
+                                    if(role.permissions.includes("products_edit"))
+                                        a(
+                                            href=`/${prefixAdmin}/products/edit/${item.id}`
+                                            class="btn btn-warning btn-sm"
+                                            ) Edit 
+                                    if(role.permissions.includes("products_update")) 
+                                        button(
+                                            class="btn btn-danger btn-sm ml-1"
+                                            delete-button 
+                                            data-id=item.id
+                                        ) Delete
+                                    a(
+                                        href=`/${prefixAdmin}/products/detail/${item.id}`
+                                        class="btn btn-secondary btn-sm ml-1"
+                                        detail-button 
+                                        data-id=item.id
+                                    ) Detail 
+                                form(
+                                    id="form-delete-button"
+                                    method="POST"
+                                    action=""
+                                    data-path=`/${prefixAdmin}/products/delete`
                                 )
-                            td #{index + 1}
-                            td
-                                img(
-                                    src=item.thumbnail
-                                    alt= item.title
-                                    width="100px"
-                                    height="auto"
+                                form(
+                                    id="form-change-status"
+                                    method="POST"
+                                    action=""
+                                    data-path=`/${prefixAdmin}/products/change-status`
                                 )
-                            td #{item.title}
-                            td #{item.price} 
-                            td 
-                                input(
-                                    type="number"
-                                    min="1"
-                                    value=item.position
-                                    style="width: 60px"
-                                    name="position" 
-                                )
-                            td 
-                                if item.status == "active"
-                                    button(
-                                                class="badge badge-success"
-                                                button-change-status 
-                                                data-status=item.status 
-                                                data-id=item.id    
-                                            ) Active
-                                else 
-                                    button(
-                                                class="badge badge-danger"
-                                                button-change-status 
-                                                data-status=item.status 
-                                                data-id=item.id 
-                                            ) Inactive
-                            td 
-                                a(
-                                    href=`/${prefixAdmin}/products/edit/${item.id}`
-                                    class="btn btn-warning btn-sm"
-                                    ) Edit 
-                                button(
-                                    class="btn btn-danger btn-sm ml-1"
-                                    delete-button 
-                                    data-id=item.id
-                                ) Delete
-                                a(
-                                    href=`/${prefixAdmin}/products/detail/${item.id}`
-                                    class="btn btn-secondary btn-sm ml-1"
-                                    detail-button 
-                                    data-id=item.id
-                                ) Detail 
-                            form(
-                                id="form-delete-button"
-                                method="POST"
-                                action=""
-                                data-path=`/${prefixAdmin}/products/delete`
-                            )
-                            form(
-                                id="form-change-status"
-                                method="POST"
-                                action=""
-                                data-path=`/${prefixAdmin}/products/change-status`
-                            )
-    +pagination(pagination)
+        +pagination(pagination)
 
     
     
