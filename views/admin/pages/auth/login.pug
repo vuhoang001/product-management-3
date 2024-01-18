@@ -1,0 +1,36 @@
+extends ../../layouts/login.pug 
+include ../../mixins/alter.pug 
+
+block main 
+    +alterSuccess(3000)
+    +alterError(3000)
+    .container.my-5 
+        .row.justify-content-center 
+            .col-8       
+                h1(class='text-center') Login 
+                
+                form(
+                    action=`/${prefixAdmin}/auth/login`
+                    method="POST"
+                )
+                    div(class='form-group')
+                        label(for="email") Email 
+                        input(
+                            type='text'
+                            class='form-control'
+                            id='email'
+                            name='email'
+                        ) 
+                    div(class='form-group')
+                        label(for="password") Password 
+                        input(
+                            type='password'
+                            class='form-control'
+                            name='password'
+                            id='password'
+                        )
+                    div(class="form-group")
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Login

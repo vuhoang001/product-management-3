@@ -4,7 +4,7 @@ const generate = require('../helpers/generateRamdomString.helper')
 const accountSchema = new mongoose.Schema({
     fullName: String,
     email: String,
-    passWord: String,
+    password: String,
     token: {
         type: String,
         default: generate(30)
