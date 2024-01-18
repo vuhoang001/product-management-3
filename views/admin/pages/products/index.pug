@@ -54,6 +54,7 @@ block main
                             th Position
                             th Status 
                             th Created by
+                            th Updated by
                             th Action 
                     tbody 
                         each item, index in products
@@ -100,9 +101,14 @@ block main
                                                 ) Inactive
                             
                                 td  
-                                    div #{item.createdBy.fullName}
-                                    +Date(item.createdBy.createdAt)
+                                    if(item.createdBy.fullName)
+                                        div #{item.createdBy.fullName}
+                                        +Date(item.createdBy.createdAt)
                                 
+                                td 
+                                    if(item.updatedBy.fullName)
+                                        div #{item.updatedBy.fullName} 
+                                        +Date(item.updatedBy.updatedAt)
                                 td 
                                     if(role.permissions.includes("products_edit"))
                                         a(

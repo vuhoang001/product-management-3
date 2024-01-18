@@ -50,14 +50,27 @@ module.exports.index = async (req, res) => {
         .skip(paginationObject.skip);
 
     for (const item of Products) {
-        const user = await Account.findOne({
+
+        const userCreated = await Account.findOne({
             _id: item.createdBy.account_id
         })
 
-        if (user) {
-            item.createdBy.fullName = user.fullName
+        if (userCreated) {
+            item.createdBy.fullName = userCreated.fullName
         }
+        const userUpdatedID = item.updatedBy.slice(-1)[0];
+        if (userUpdatedID) {
+            const userUpdated = await Account.findOne({
+                _id: userUpdatedID.account_id
+            })
+
+            if (userUpdated) {
+                item.updatedBy.fullName = userUpdated.fullName
+            }
+        }
+
     }
+
 
     res.render("admin/pages/products/index.pug", {
         pageTitle: "Products Admin",
@@ -87,8 +100,17 @@ module.exports.changeMulti = async (req, res) => {
 
     const type = req.body.type
     const ids = req.body.ids.split(", ")
+
+    const updatedBy = {
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+    }
+
     if (type == "active" || type == "inactive") {
-        await products.updateMany({ _id: { $in: ids } }, { status: type })
+        await products.updateMany({ _id: { $in: ids } }, {
+            status: type,
+            $push: { updatedBy: updatedBy }
+        })
         req.flash("success", "Successfully!")
     } else if (type == "delete-all") {
         await products.updateMany({ _id: { $in: ids } }, { deleted: true }, {
@@ -178,7 +200,15 @@ module.exports.editPatch = async (req, res) => {
         req.body.thumbnail = `/uploads/${req.file.filename}`
     }
 
-    await products.updateOne({ _id: id }, req.body)
+    const updatedBy = {
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+    }
+
+    await products.updateOne({ _id: id }, {
+        ...req.body,
+        $push: { updatedBy: updatedBy }
+    })
     req.flash("success", "Sucessfuly! ")
     res.redirect(`/${pathSystem.admin_path}/products`)
 }
