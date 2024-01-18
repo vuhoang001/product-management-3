@@ -4,14 +4,16 @@ const productsCategoryRouter = require('./products-category.route')
 const permissionsRouter = require('./role.route')
 const accountsRouter = require('./accounts.route')
 const authRouter = require('./auth.router')
+
+const authMiddleware = require('../../middlewares/admin/authMiddleware.middleware')
 const system = require("../../config/system")
 
 module.exports = (app) => {
-    app.use(`/${system.admin_path}/dashboard`, dashboardRouter)
-    app.use(`/${system.admin_path}/products`, productsRouter)
-    app.use(`/${system.admin_path}/products-category`, productsCategoryRouter)
-    app.use(`/${system.admin_path}/roles`, permissionsRouter)
-    app.use(`/${system.admin_path}/accounts`, accountsRouter)
+    app.use(`/${system.admin_path}/dashboard`, authMiddleware.requireAuth, dashboardRouter)
+    app.use(`/${system.admin_path}/products`, authMiddleware.requireAuth, productsRouter)
+    app.use(`/${system.admin_path}/products-category`, authMiddleware.requireAuth, productsCategoryRouter)
+    app.use(`/${system.admin_path}/roles`, authMiddleware.requireAuth, permissionsRouter)
+    app.use(`/${system.admin_path}/accounts`, authMiddleware.requireAuth, accountsRouter)
     app.use(`/${system.admin_path}/auth`, authRouter)
 }
 
