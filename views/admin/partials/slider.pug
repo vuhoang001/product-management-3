@@ -1,21 +1,22 @@
 .slider
     .inner-menu     
         ul 
+            if(role)
+                li 
+                    a(href="/" + prefixAdmin + "/dashboard") Dashboard 
+                if(role.permissions.includes("products-category_view"))
+                    li 
+                        a(href="/" + prefixAdmin + "/products-category") Products category
+                if(role.permissions.includes("products_view"))
+                    li 
+                        a(href="/" + prefixAdmin + "/products") Products
+                if(role.permissions.includes("roles_view"))
+                    li 
+                        a(href="/" + prefixAdmin + "/roles") Permission
+                if(role.permissions.includes("roles_permission")) 
+                    li 
+                        a(href="/" + prefixAdmin + "/roles/permissions") Phân quyền
+                if(role.permissions.includes("account_view"))
+                    li 
+                        a(href="/" + prefixAdmin + "/accounts") Account
             
-            li 
-                a(href="/" + prefixAdmin + "/dashboard") Dashboard 
-            if(role.permissions.includes("products-category_view"))
-                li 
-                    a(href="/" + prefixAdmin + "/products-category") Products category
-            if(role.permissions.includes("products_view"))
-                li 
-                    a(href="/" + prefixAdmin + "/products") Products
-            if(role.permissions.includes("roles_view"))
-                li 
-                    a(href="/" + prefixAdmin + "/roles") Permission
-            if(role.permissions.includes("roles_permission")) 
-                li 
-                    a(href="/" + prefixAdmin + "/roles/permissions") Phân quyền
-            if(role.permissions.includes("account_view"))
-                li 
-                    a(href="/" + prefixAdmin + "/accounts") Account

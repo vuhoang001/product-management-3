@@ -1,0 +1,17 @@
+extends ../../layouts/default.pug
+include ../../mixins/time.pug
+block main 
+    div #{user}
+    h1 Full name: #{user.fullName}
+    h1 Phone: #{user.phone}
+    h1 Status: #{user.status}
+    h1  
+        Span Created At:
+        +Date(user.createdAt)
+    h1
+        img(src=user.avatar, alt="", srcset="")
+    
+    a(
+        href=`/${prefixAdmin}/my-account/edit`
+        class='btn btn-primary mr-2 btn-lg'
+    ) Edit information

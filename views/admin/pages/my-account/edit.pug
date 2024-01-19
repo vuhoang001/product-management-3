@@ -1,0 +1,73 @@
+extends ../../layouts/default.pug 
+
+block main 
+    h1(class='mb-4') Edit information user
+    
+    form(
+        action=`/${prefixAdmin}/my-account/edit?_method=PATCH`
+        enctype="multipart/form-data"
+        method="POST"
+    )
+        div(class="form-group")
+            label(for="fullName") Full name 
+            input(
+                type="text"
+                class="form-control"
+                id="fullName"
+                name="fullName"
+                value=user.fullName
+            ) 
+        
+        div(class="form-group")
+            label(for="email") Email 
+            input(
+                type="text"
+                class="form-control"
+                id="email"
+                name="email"
+                value=user.email
+            ) 
+
+        div(class="form-group")
+            label(for="password") Password 
+            input(
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                value=user.password
+            ) 
+
+        div(class="form-group")
+            label(for="phone") Phone 
+            input(
+                type="text"
+                class="form-control"
+                id="phone"
+                name="phone"
+                value=user.phone
+            ) 
+
+
+        div(class="form-group"
+            upload-image
+        )
+            label(for="thumbnail") Picture 
+            input(
+                type="file"
+                class="form-control-file"
+                id="thumbnail"
+                name="thumbnail"
+                accept="image/*"
+                upload-image-input
+            ) 
+            img(
+                src=user.avatar
+                class="image-preview"
+                upload-image-preview
+            )
+
+        a(
+                href=`/${prefixAdmin}/my-account`
+                class='btn btn-primary mr-2 btn-lg'
+            ) Edit information
