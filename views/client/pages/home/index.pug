@@ -1,7 +1,18 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/box-head.pug
+include ../../mixins/product-layout.pug
 block main 
-    .container-fluid
-        .row 
-            .col-12
-                h2 Browser
+
+    .section-products-featured.my-5 
+        .container 
+            .row 
+                .col-12 
+                    +box-head("Products list")
+            +product-grid(productsFeatured)
+
+    .section-products-featured.my-5 
+        .container 
+            .row 
+                .col-12 
+                    +box-head("New products list")
+            +product-grid(newProducts)

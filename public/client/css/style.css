@@ -97,6 +97,18 @@
     border-radius: 8px;
 }
 
+.product-item .inner-image .inner-featured {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+    background: green;
+    color: white;
+    padding: 3px 6px;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
 /* sub menu  */
 .sub-menu {
     position: relative;
