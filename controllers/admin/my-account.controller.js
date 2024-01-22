@@ -1,6 +1,6 @@
 
 // [GET] admin/my-account 
-module.exports.index = (req, res) => {
+module.exports.index = async (req, res) => {
     res.render('admin/pages/my-account/index.pug')
 }
 

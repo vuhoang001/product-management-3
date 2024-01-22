@@ -1,3 +1,4 @@
+include ../mixins/sub-menu.pug
 header.header 
     .container 
         .row.align-items-center
@@ -11,22 +12,9 @@ header.header
                     ul 
                         li  
                             a(href="/home") Browser 
-                        li 
+                        li(class='sub-menu')
                             a(href="/products") Productions 
-
-                            ul  
-                                li 
-                                    a(href="/products/slug-1") Section 1       
-                                    ul 
-                                        li         
-                                            a(href="/products/slug-1-1") Section 1-1  
-                                        li  
-                                            a(href="/products/slug-1-2") Section 1-2
-                                            ul 
-                                                li 
-                                                    a(href="/products/slug-1-2-1") Section 1-2-1      
-                                                li 
-                                                    a(href="/products/slug-1-2-2") Section 1-2-2      
-                                
-                                li 
-                                    a(href="/products/slug-2") Section 2    
+                            - const pathProduct = '/products'
+                            if(layoutCategoryProduct)
+                                +sub-menu(layoutCategoryProduct, pathProduct)
+                            

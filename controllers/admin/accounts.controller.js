@@ -31,7 +31,6 @@ module.exports.create = async (req, res) => {
 module.exports.createPost = async (req, res) => {
     req.body.password = md5(req.body.password)
     const record = new Accounts(req.body)
-    console.log(record)
     await record.save()
     req.flash('success', 'Successfully !')
     res.redirect(`/${systemConfig.admin_path}/accounts`)
