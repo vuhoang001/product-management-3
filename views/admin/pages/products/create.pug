@@ -28,6 +28,18 @@ block main
                 name="description"
                 rows="5"
             )  
+        
+        div(class='form-group form-check form-check-inline')
+            input(type="radio", id="feature1", name="featured", value="1", checked)
+            label(for="feature1" class="form-check-label ml-1")  Feature
+
+        div(class='form-group form-check form-check-inline')
+            input(type="radio", id="feature0", name="featured", value="0")
+            label(for="feature0" class="form-check-label ml-1")  No 
+
+      
+   
+
         div(class="form-group")
             label(for="price") Price 
             input(

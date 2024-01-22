@@ -156,7 +156,7 @@ module.exports.create = (req, res) => {
 
 // [POST] admin/products/createPost
 module.exports.createPost = async (req, res) => {
-    console.log(res.locals.user.id)
+
 
     req.body.price = parseInt(req.body.price)
     req.body.discountPercentage = parseInt(req.body.discountPercentage)

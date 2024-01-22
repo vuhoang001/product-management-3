@@ -4,7 +4,6 @@ block main
     +alterSuccess(3000)
     +alterError(3000)
     h1(class="mb-4") Edit products
-    
     form(
         action=`/${prefixAdmin}/products/edit/${products.id}?_method=PATCH` 
         enctype="multipart/form-data"
@@ -29,6 +28,21 @@ block main
                 rows="5"
                 
             ) #{products.description}
+        
+        div(class='form-group form-check form-check-inline')
+            input(type="radio", id="feature1", name="featured", value="1", 
+                checked=(products.featured === "1" ? true : false)    
+            )
+            label(for="feature1" class="form-check-label ml-1")  Feature
+
+        div(class='form-group form-check form-check-inline')
+            input(type="radio", id="feature0", name="featured", value="0"
+                checked=(products.featured === "0" ? true : false)                
+            )
+            label(for="feature0" class="form-check-label ml-1")  No 
+
+        
+
         div(class="form-group")
             label(for="price") Price 
             input(
