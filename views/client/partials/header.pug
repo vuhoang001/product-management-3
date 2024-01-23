@@ -7,7 +7,24 @@ header.header
                     a(href="/home")
                         img(src="client/image/lofi.jpg", alt="log" width="50px")
 
-            .col-9  
+            .col-5 
+                form(
+                    action="/search"
+                    method="GET"
+                )
+                    div(class='form-group d-flex mb-0')
+                        input(
+                            type='text'
+                            placeholder='Input here!'
+                            class='form-control'
+                            name='keyword'
+                            value=keyword
+                        )
+                        button(
+                            type='submit'
+                            class='btn btn-primary'
+                        ) Search
+            .col-4
                 .inner-menu 
                     ul 
                         li  
