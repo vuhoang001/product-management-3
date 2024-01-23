@@ -1,38 +1,41 @@
 extends ../../layouts/default.pug
 
 block main
-    if(products.title)
-        h1(class="mb-4") #{products.title}
 
+    .container(class="mt-5 mb-5")
+        .card
+            .container-fluid
+                .row
+                    .col-6
+                        img.thumbnail(src=products.thumbnail, alt=products.title style="max-width: 100%; height: auto;")
+                    .col-6
+                        h1(class="mt-3") #{products.title}
+                        span(class="mb-4") Category: 
+                        span(class='text-primary mb-5') #{products.price}
+                        br
+                        span(class="mb-4") Discount: 
+                        span(class='text-primary mb-5') #{products.discountPercentage} 
+                        br
+                        span(class="mb-4") Price:  
+                        span(class='text-primary mb-5') #{products.price}
+                        br
+                        span(class="mb-4") Stock: 
+                        span(class='text-primary mb-5') #{products.stock} 
 
-    if(products.price)
-        h1(class="mb-4") PRICE: #{products.price}
-
-
-    if(products.discountPercentage)
-        h1(class="mb-4") DISCOUNT: #{products.discountPercentage}
-
-    if(products.stock)
-        h1(class="mb-4") STOCK: #{products.stock} 
-
-    if(products.thumbnail)
-        div(class="mb-4")
-            img(
-                src=products.thumbnail 
-                style="width:100px"
-            ) 
-
-
-    if(products.status)
-        div(class="mb-4")
-            if(products.status ==- "active")
-                span(class="badge badge-success") Active
-            else 
-                span(class="badge badge-danger") Inactive
-
-    if(products.position)
-        h1(class="mb-4") POSITION: #{products.position}
-
-    if(products.description)
-        h1(class="mb-4") DESCRIPTION: !{products.description}
-
+                        form(
+                            action=`/cart/add/${products.id}`
+                            method='POST'
+                        ) 
+                            input(
+                                class='form-control mb-2'
+                                type="number"
+                                name='quantity'
+                                value='1'
+                                min='1'
+                                max=products.stock
+                            )
+                            button(
+                                type='submit'
+                                class='btn btn-success btn-block'
+                            ) Add to cart
+                        
