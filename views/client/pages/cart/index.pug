@@ -1,0 +1,52 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+block main 
+    .container
+        .col-12
+            h1(class='mb-5 mt-5') Cart
+        
+        .row 
+            .col-12 
+                table(class='table table-bordered mb-5')
+                    thead 
+                        tr 
+                            th Index
+                            th Image 
+                            th Name 
+                            th Price 
+                            th Stock
+                            th Total price 
+                            th Action
+                    tbody 
+                        if(records.products.length > 0)
+                            each item, index in records.products
+                                tr 
+                                    td #{index + 1}
+                                    td 
+                                        img(src=item.inforProduct.thumbnail, alt="" width="80px")
+                                    td 
+                                        a(
+                                            href=`/products/detail/:id` 
+                                        ) #{item.inforProduct.title}
+                                    td 
+                                        a #{item.inforProduct.price}
+                                    td 
+                                        input(
+                                            type='Number'
+                                            min="1"
+                                            max=item.inforProduct.stock
+                                            value=item.quantity
+                                        )
+                                    
+                                    td  
+                                        a #{item.totalPrice}
+                                    td 
+                                        a(
+                                            href=`/cart/delete/${item.inforProduct.id}`
+                                            class="btn btn-danger btn-sm ml-1"
+                                        ) Delete
+                                    
+                    
+                    
+                h3(class="text-right")  Total: #{records.totalPrice} $
+                
