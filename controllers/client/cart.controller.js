@@ -61,3 +61,15 @@ module.exports.cart = async (req, res) => {
     })
 
 }
+
+// GET /cart/delete/:product_id
+module.exports.delete = async (req, res) => {
+    const cartID = req.cookies.cartID
+    const productID = req.params.productID
+    await cartModel.updateOne({
+        _id: cartID
+    }, {
+        "$pull": { products: { "product_id": productID } }
+    })
+    res.redirect("back")
+}
