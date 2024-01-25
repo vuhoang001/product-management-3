@@ -73,3 +73,21 @@ module.exports.delete = async (req, res) => {
     })
     res.redirect("back")
 }
+
+module.exports.changeQuantity = async (req, res) => {
+    const productID = req.params.productID
+    const quantity = parseInt(req.params.quantity)
+    const cartID = req.cookies.cartID
+
+    await cartModel.updateOne(
+        {
+            _id: cartID,
+            'products.product_id': productID
+        },
+        {
+            $set: { 'products.$.quantity': quantity }
+        }
+    );
+
+    res.redirect('back')
+}

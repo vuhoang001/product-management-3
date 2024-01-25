@@ -36,6 +36,8 @@ block main
                                             min="1"
                                             max=item.inforProduct.stock
                                             value=item.quantity
+                                            quantity-product
+                                            product-id=item.product_id
                                         )
                                     
                                     td  
@@ -52,3 +54,5 @@ block main
 
                 div(class='text-right mb-3')
                     a(href="/checkout" class='btn btn-success') Pay 
+
+        script(src="/client/js/cart.js") 
