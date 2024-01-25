@@ -4,6 +4,7 @@ const searchRouters = require("./search.route")
 const categoryMiddleware = require('../../middlewares/client/category.middleware')
 const cartMiddleware = require('../../middlewares/client/cart.middleware')
 const cartRouters = require("./cart.route")
+const checkoutRoute = require("./checkout.route")
 module.exports = (app) => {
     app.use(categoryMiddleware.category)
     app.use(cartMiddleware.cardID)
@@ -11,4 +12,5 @@ module.exports = (app) => {
     app.use("/products", productsRoutes)
     app.use("/search", searchRouters)
     app.use("/cart", cartRouters)
+    app.use("/checkout", checkoutRoute)
 }
