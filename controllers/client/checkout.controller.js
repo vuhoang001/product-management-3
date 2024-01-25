@@ -1,6 +1,6 @@
 const cartModel = require('../../model/cart.model')
 const productModel = require('../../model/products.model')
-
+const orderModel = require("../../model/orders.model")
 // [GET] /checkout 
 module.exports.index = async (req, res) => {
     const cartID = req.cookies.cartID
@@ -28,4 +28,57 @@ module.exports.index = async (req, res) => {
             records: carts
         }
     )
+}
+
+// [POST] checkout/order 
+module.exports.order = async (req, res) => {
+    const cartID = req.cookies.cartID
+    const userInfor = req.body
+
+    const cart = await cartModel.findOne(
+        {
+            _id: cartID
+        }
+    )
+
+    let products = []
+    for (const item of cart.products) {
+        const objectProducts = {
+            product_id: item.product_id,
+            price: 0,
+            discountPercentage: 0,
+            quantity: item.quantity
+        }
+
+        const productInfo = await productModel.findOne(
+            {
+                _id: item.product_id
+            }
+        )
+        objectProducts.price = productInfo.price
+        objectProducts.discountPercentage = productInfo.discountPercentage
+        products.push(objectProducts)
+
+    }
+
+    const objectOrder = {
+        cart_id: cartID,
+        userInfor: userInfor,
+        products: products
+    }
+
+
+    const order = new orderModel(objectOrder)
+    await order.save()
+
+    await cartModel.updateOne(
+        {
+            _id: cartID
+        }, {
+        products: []
+    }
+    )
+
+    res.send(`checkout/success/${order.id}`)
+
 }
