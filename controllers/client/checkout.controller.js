@@ -79,6 +79,31 @@ module.exports.order = async (req, res) => {
     }
     )
 
-    res.send(`checkout/success/${order.id}`)
+    res.redirect(`/checkout/success/${order.id}`)
 
+}
+
+// [GET] checkout/success/:orderID 
+module.exports.success = async (req, res) => {
+    const orderID = req.params.orderID
+    const order = await orderModel.findOne(
+        {
+            _id: orderID
+        }
+    )
+    for (const item of order.products) {
+        const productInfo = await productModel.findOne(
+            {
+                _id: item.product_id
+            }
+        )
+
+        item.productInfo = productInfo
+        item.newPrice = item.price * item.quantity
+    }
+
+    res.render("client/pages/checkout/success.pug", {
+        pageTitle: "Order successfully!",
+        order: order
+    })
 }
