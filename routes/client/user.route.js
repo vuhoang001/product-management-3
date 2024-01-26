@@ -1,0 +1,11 @@
+const express = require("express")
+const router = express.Router()
+const controller = require("../../controllers/client/user.controller.js")
+const userValidate = require('../../validates/client/user.validate.js')
+const userMiddleware = require('../../middlewares/client/user.middleware.js')
+router.get('/register', controller.register)
+router.post('/register', userValidate.resgisterPost, controller.registerPost)
+router.get('/login', controller.login)
+router.post('/login', controller.loginPost)
+router.get('/log-out', controller.logOut)
+module.exports = router

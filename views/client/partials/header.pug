@@ -37,4 +37,11 @@ header.header
                                 +sub-menu(layoutCategoryProduct, pathProduct)
                         li  
                             a(href="/cart") Cart (#{miniCart ? miniCart.totalQuantity : "0"})
-                            
+                        if(user)
+                            li 
+                                a(href='/user/log-out') Log out
+                        else    
+                            li 
+                                a(href='/user/login') Login
+                            li 
+                                a(href='/user/register') Register
