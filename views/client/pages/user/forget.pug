@@ -1,0 +1,31 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+
+block main 
+    .container.my-3 
+        .row 
+            .col-12 
+                +box-head('Forget password')
+
+        .row.justify-content-center 
+            .col-8 
+                h1(class='text-center') Forget password
+                form(
+                    action="/user/password/forget"
+                    method="POST"
+                )
+                    div(class='form-group')
+                        label(for="email") Email
+                        input(
+                            type='text'
+                            class='form-control'
+                            id='email'
+                            name='email'
+                            required
+                        )
+                    button(
+                        type='submit'
+                        class='btn btn-success'
+                    ) Get password
+

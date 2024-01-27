@@ -1,5 +1,7 @@
 const user = require('../../model/user.model')
 const userModel = require('../../model/user.model')
+const forgetPasswordModel = require('../../model/forget-password.model')
+const ramdomNumber = require('../../helpers/generateRamdomString.helper')
 const md5 = require('md5')
 // [GET] user/register 
 module.exports.register = (req, res) => {
@@ -62,4 +64,67 @@ module.exports.loginPost = async (req, res) => {
 module.exports.logOut = (req, res) => {
     res.clearCookie('tokenUser')
     res.redirect('/home')
-} 
+}
+
+// [GET] user/password/forget
+module.exports.forget = (req, res) => {
+    res.render('client/pages/user/forget.pug')
+}
+
+
+// [POST] user/password/forget 
+module.exports.forgetPost = async (req, res) => {
+    const email = req.body.email
+
+    const record = await userModel.findOne(
+        {
+            email: email
+        }
+    )
+
+    if (!record) {
+        res.redirect('back')
+        return
+    }
+
+    const forgetObject = (
+        {
+            email: email,
+            otp: ramdomNumber.ramdomNumber(8),
+            expireAt: Date.now()
+        }
+    )
+
+    const forgetPassword = new forgetPasswordModel(forgetObject)
+    await forgetPassword.save()
+
+    res.redirect(`/user/password/otp?email=${email}`)
+}
+
+
+// [GET] /user/password/otp 
+module.exports.otp = (req, res) => {
+    const email = req.query.email
+    res.render('client/pages/user/otp.pug', {
+        email: email
+    })
+}
+
+
+// [POST] /user/password/otp 
+module.exports.otpPost = async (req, res) => {
+    const otp = req.body.otp
+    const email = req.body.email
+
+    const result = await forgetPasswordModel.findOne({
+        email: email,
+        otp: otp
+    })
+
+    if (!result) {
+        res.redirect('back')
+        return
+    } else {
+        res.redirect('/products')
+    }
+}
