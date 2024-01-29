@@ -2,6 +2,7 @@ const user = require('../../model/user.model')
 const userModel = require('../../model/user.model')
 const forgetPasswordModel = require('../../model/forget-password.model')
 const ramdomNumber = require('../../helpers/generateRamdomString.helper')
+const sendMailHelper = require('../../helpers/sendMail.helpers')
 const md5 = require('md5')
 // [GET] user/register 
 module.exports.register = (req, res) => {
@@ -86,11 +87,11 @@ module.exports.forgetPost = async (req, res) => {
         res.redirect('back')
         return
     }
-
+    const otp = ramdomNumber.ramdomNumber(3)
     const forgetObject = (
         {
             email: email,
-            otp: ramdomNumber.ramdomNumber(8),
+            otp: otp,
             expireAt: Date.now()
         }
     )
@@ -98,6 +99,11 @@ module.exports.forgetPost = async (req, res) => {
     const forgetPassword = new forgetPasswordModel(forgetObject)
     await forgetPassword.save()
 
+    const subject = 'Mã OTP xác minh lấy lại mật khẩu!'
+    const html = `
+        Mã OTP xác minh lấy lại mật khẩu là <b>${otp}</b>. Thời hạn sử dụng là 3 phút. Lưu ý không được để lộ mã OTP! 
+    `
+    sendMailHelper.sendMail(email, subject, html)
     res.redirect(`/user/password/otp?email=${email}`)
 }
 
@@ -124,7 +130,13 @@ module.exports.otpPost = async (req, res) => {
     if (!result) {
         res.redirect('back')
         return
-    } else {
-        res.redirect('/products')
     }
+
+    const user = await userModel.findOne({
+        email: email
+    })
+
+    res.cookie('tokenUser', user.tokenUser)
+
+    res.redirect('/products')
 }
