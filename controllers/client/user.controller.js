@@ -140,3 +140,8 @@ module.exports.otpPost = async (req, res) => {
 
     res.redirect('/products')
 }
+
+// [GET] user/info 
+module.exports.info = (req, res) => {
+    res.render('client/pages/user/info')
+}
