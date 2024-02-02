@@ -1,4 +1,4 @@
-const user = require('../../model/user.model')
+const cartModel = require("../../model/cart.model")
 const userModel = require('../../model/user.model')
 const forgetPasswordModel = require('../../model/forget-password.model')
 const ramdomNumber = require('../../helpers/generateRamdomString.helper')
@@ -58,6 +58,16 @@ module.exports.loginPost = async (req, res) => {
     }
 
     res.cookie('tokenUser', records.tokenUser)
+
+    // Luu user_id vao collection carts 
+    await cartModel.updateOne(
+        {
+            _id: req.cookies.cartID
+        },
+        {
+            user_id: records.id
+        }
+    )
     res.redirect('/products')
 }
 
