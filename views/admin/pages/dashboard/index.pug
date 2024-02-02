@@ -1,5 +1,48 @@
 extends ../../layouts/default.pug 
 
 block main 
-    h1 Dashboard 2
-    div #{user}
+    h1 Dashboard 
+    .row.mt-4 
+        .col-12 
+            .card.mb-4 
+                .card-header Information account 
+                .card-body 
+                    if(user)
+                        if(user.fullName) 
+                            p Full name: #{user.fullName}
+                        if(user.email)
+                            p Email: #{user.email}
+                        if(user.phone)
+                            p Phone: #{user.phone}
+    
+        .col-6 
+            .card.mb-4
+                .card-header Categories list 
+                .card-body 
+                    p Quantity: #{record.category.quantity}
+                    p Active: #{record.category.active}
+                    p Inactive: #{record.category.inactive}
+
+        .col-6 
+            .card.mb-4
+                .card-header Products
+                .card-body 
+                    p Quantity: #{record.product.quantity}
+                    p Active: #{record.product.active}
+                    p Inactive: #{record.product.inactive}
+
+        .col-6 
+            .card.mb-4
+                .card-header Admin accounts
+                .card-body 
+                    p Quantity: #{record.admin.quantity}
+                    p Active: #{record.admin.active}
+                    p Inactive: #{record.admin.inactive}
+
+        .col-6 
+            .card.mb-4
+                .card-header Client accounts
+                .card-body 
+                    p Quantity: #{record.client.quantity}
+                    p Active: #{record.client.active}
+                    p Inactive: #{record.client.inactive}
