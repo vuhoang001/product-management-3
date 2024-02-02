@@ -1,0 +1,73 @@
+extends ../../layouts/default.pug
+include ../../mixins/alter.pug
+
+block main 
+    h1(class='mb-4') Create website information
+    form(
+        action=`/${prefixAdmin}/setting/general?_method=POST`
+        method='POST'
+        enctype='multipart/form-data'
+    ) 
+        div(class='form-group')
+            label(for="websiteName") Website name 
+            input(
+                type='text'
+                class='form-control'
+                id='websiteName'
+                name='websiteName'
+                value=record.websiteName
+            )
+        div(class="form-group"
+                upload-image
+            )
+                label(for="thumbnail") Picture 
+                input(
+                    type="file"
+                    class="form-control-file"
+                    id="thumbnail"
+                    name="thumbnail"
+                    accept="image/*"
+                    upload-image-input
+                ) 
+                img(
+                    src=record.thumbnail
+                    class="image-preview"
+                    upload-image-preview
+                ) 
+
+        div(class='form-group')
+            label(for="phone") Phone
+            input(
+                type='text'
+                class='form-control'
+                id='phone'
+                name='phone'
+                value=record.phone
+            )
+        
+        div(class='form-group')
+            label(for="email") Email
+            input(
+                type='text'
+                class='form-control'
+                id='email'
+                name='email'
+                value=record.email
+            )
+
+
+        div(class='form-group')
+            label(for="copyright") Copyright
+            input(
+                type='text'
+                class='form-control'
+                id='copyright'
+                name='copyright'
+                value=record.copyright
+            )
+        button(
+            type='submit'
+            class='btn btn-primary'
+        ) Create
+        
+        script(src="/admin/js/products.js") 
