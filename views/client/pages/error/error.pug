@@ -1,0 +1,12 @@
+extends ../../layouts/nothing.pug
+include ../../mixins/box-head.pug
+
+
+block main 
+    .container-fluid
+      .row.justify-content-center.mt-5
+        .col-md-6
+          img(src='https://placekitten.com/400/300', alt='404 Not Found')
+          h1.mt-4 404 Not Found
+          p The page you are looking for might be in another galaxy.
+          a.btn.btn-primary( onclick='history.back()') Go back home

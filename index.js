@@ -28,12 +28,16 @@ app.use(session({ cookie: { maxAge: 6000 } }));
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
+
 database.connect();
 
 app.locals.prefixAdmin = systemPath.admin_path
 app.locals.moment = moment
 routeClient(app);
 routeAdmin(app)
+app.get("*", (req, res) => {
+    res.render('client/pages/error/error.pug')
+})
 app.listen(port, () => {
     console.log("Successfully!");
 })
