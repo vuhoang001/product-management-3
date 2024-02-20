@@ -1,0 +1,26 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/product-layout.pug
+
+block main 
+    .row    
+        .col-12.d-flex.justify-content-center.mt-3
+            .chat 
+                .inner-body 
+                    .inner-incoming
+                        .inner-name Name
+                        .inner-content incomingaaaaaaaa
+                    .inner-outgoing.d-flex.justify-content-end
+                        .inner-content outgoing
+
+                    .inner-foot 
+                        form(
+                            class='inner-form'
+                            action=''
+                        )
+                            input(
+                                text=''
+                                placeholder='Type here ...'
+                                name='content'
+                            )
+                            button Send

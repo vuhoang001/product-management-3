@@ -31,7 +31,7 @@ module.exports.upload = (req, res, next) => {
         }
         upload(req);
     } else {
-        console.log(req.file)
+
         next()
     }
 }
