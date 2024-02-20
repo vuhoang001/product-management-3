@@ -39,9 +39,8 @@ database.connect();
 // Socket io
 const server = http.createServer(app);
 const io = new Server(server);
-io.on('connection', (socket) => {
-    console.log('a user connected');
-});
+global._io = io
+
 // End socket io 
 
 app.locals.prefixAdmin = systemPath.admin_path
