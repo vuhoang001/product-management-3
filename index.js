@@ -7,6 +7,10 @@ const routeAdmin = require("./routes/admin/index.route")
 const systemPath = require("./config/system")
 const database = require("./config/database");
 const moment = require('moment')
+const http = require('http');
+
+const { Server } = require("socket.io");
+
 require("dotenv").config();
 
 const flash = require("express-flash")
@@ -31,6 +35,15 @@ app.set("view engine", "pug");
 
 database.connect();
 
+
+// Socket io
+const server = http.createServer(app);
+const io = new Server(server);
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
+// End socket io 
+
 app.locals.prefixAdmin = systemPath.admin_path
 app.locals.moment = moment
 routeClient(app);
@@ -38,6 +51,7 @@ routeAdmin(app)
 app.get("*", (req, res) => {
     res.render('client/pages/error/error.pug')
 })
-app.listen(port, () => {
+
+server.listen(port, () => {
     console.log("Successfully!");
 })
