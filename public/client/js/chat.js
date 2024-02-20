@@ -25,3 +25,11 @@ socket.on("server_return_message", (data) => {
     body.appendChild(div)
 })
 // server_return_message
+
+// scoll_chat_to_bottom 
+const chatForm = document.querySelector('.chat .inner-body')
+console.log(chatForm)
+if (chatForm) {
+    chatForm.scrollTop = chatForm.scrollHeight
+}
+// scoll_chat_to_bottom
