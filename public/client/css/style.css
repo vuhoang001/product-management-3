@@ -393,12 +393,24 @@
     padding: 20px;
 }
 
+
 .inner-foot button {
-    width: 10%;
+    width: 5%;
     border: none;
     background-color: #DC143C;
     border-radius: 15px;
     color: white
 }
+
+/* emoji-picker */
+.tooltip {
+  visibility: hidden;
+}
+
+.tooltip.shown{
+  visibility: visible;
+  opacity: 1;
+}
+/* emoji-picker */
 
 
