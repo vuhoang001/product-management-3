@@ -418,6 +418,10 @@
   position: relative;
 }
 
+.box-typing.show {
+  display: none
+}
+
 .box-typing .inner-dots {
   position: relative;
   height: 20px; 

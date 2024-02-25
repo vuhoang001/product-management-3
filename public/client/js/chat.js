@@ -15,7 +15,7 @@ formSendData.addEventListener('submit', (e) => {
 // server_return_message
 socket.on("server_return_message", (data) => {
     const body = document.querySelector('.chat .inner-body')
-
+    const boxTyping = document.querySelector('.inner-list-typing')
     const div = document.createElement('div')
     div.classList.add("inner-incoming")
     div.innerHTML = `
@@ -23,7 +23,7 @@ socket.on("server_return_message", (data) => {
         <div class='inner-content'>${data.content}</div>
     `
 
-    body.appendChild(div)
+    body.insertBefore(div, boxTyping)
     body.scrollTop = body.scrollHeight
 })
 // server_return_message
@@ -58,3 +58,47 @@ document.querySelector('emoji-picker')
     });
 
 // emoji 
+
+// typing 
+const inputForm = document.querySelector('.inner-form')
+const innerInput = inputForm.querySelector('input')
+var timeOut
+innerInput.addEventListener('keyup', () => {
+    socket.emit('send_action_typing_to_server', 'pressing')
+    clearTimeout(timeOut)
+    timeOut = setTimeout(() => {
+        socket.emit('send_action_typing_to_server', 'hidden')
+    }, 2000)
+
+
+})
+
+const innerListTyping = document.querySelector('.inner-list-typing')
+if (innerListTyping) {
+    socket.on('send_action_typing_to_client', (msg) => {
+        const type = msg.content;
+        if (type == 'pressing') {
+            const exist = innerListTyping.querySelector(`[user-id="${msg.userID}"]`)
+            if (!exist) {
+                const boxTyping = document.createElement('div')
+                boxTyping.classList.add('box-typing')
+                boxTyping.setAttribute('user-id', msg.userID)
+                boxTyping.innerHTML = `
+                    <div class="inner-name">${msg.fullName}</div>
+                    <div class="inner-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                `
+                innerListTyping.appendChild(boxTyping)
+                chatForm.scrollTop = chatForm.scrollHeight
+            }
+        } else {
+            const exist = innerListTyping.querySelector(`[user-id="${msg.userID}"]`)
+            innerListTyping.removeChild(exist)
+        }
+    })
+
+}
+// end typing 
