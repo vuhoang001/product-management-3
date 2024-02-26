@@ -4,9 +4,14 @@ const formSendData = document.querySelector('.chat .inner-form')
 formSendData.addEventListener('submit', (e) => {
     e.preventDefault()
     const content = e.target.elements.content.value
-    if (content) {
-        socket.emit('client_send_message', content)
+    const images = upload.cachedFileArray || [];
+    if (content || images.length > 0) {
+        socket.emit('client_send_message', {
+            content: content,
+            images: images
+        })
         e.target.elements.content.value = ''
+        upload.resetPreviewPanel(); // clear all selected images (file upload with preview)
     }
 })
 // END_CLIENT_SEND_MESSAGE
@@ -14,13 +19,28 @@ formSendData.addEventListener('submit', (e) => {
 
 // server_return_message
 socket.on("server_return_message", (data) => {
+    let htmlContent = ''
     const body = document.querySelector('.chat .inner-body')
     const boxTyping = document.querySelector('.inner-list-typing')
     const div = document.createElement('div')
     div.classList.add("inner-incoming")
+    if (data.content) {
+        htmlContent = `<div class='inner-content'>${data.content}</div><br>`
+    }
+
+    if (data.images) {
+        htmlImages += `<div class='inner-images'>`
+        for (const image of data.images) {
+            htmlImages += `
+                <img src="${data.image}"
+            `
+        }
+        htmlImages += `</div>`
+    }
     div.innerHTML = `
         <div class='inner-name'>${data.fullName}</div>
-        <div class='inner-content'>${data.content}</div>
+        ${htmlContent}
+        ${htmlImages}
     `
 
     body.insertBefore(div, boxTyping)
@@ -102,3 +122,11 @@ if (innerListTyping) {
 
 }
 // end typing 
+
+
+// uploadPreview 
+const upload = new FileUploadWithPreview.FileUploadWithPreview('my-unique-id', {
+    multiple: true,
+    maxFileCount: 6
+});
+// end uploadPreview
