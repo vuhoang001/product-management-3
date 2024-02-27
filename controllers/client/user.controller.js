@@ -155,3 +155,5 @@ module.exports.otpPost = async (req, res) => {
 module.exports.info = (req, res) => {
     res.render('client/pages/user/info')
 }
+
+
