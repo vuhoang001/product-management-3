@@ -1,19 +1,21 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
 // CLIENT_SEND_MESSAGE 
 const formSendData = document.querySelector('.chat .inner-form')
-formSendData.addEventListener('submit', (e) => {
-    e.preventDefault()
-    const content = e.target.elements.content.value
-    const images = upload.cachedFileArray || [];
-    if (content || images.length > 0) {
-        socket.emit('client_send_message', {
-            content: content,
-            images: images
-        })
-        e.target.elements.content.value = ''
-        upload.resetPreviewPanel(); // clear all selected images (file upload with preview)
-    }
-})
+if (formSendData) {
+    formSendData.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const content = e.target.elements.content.value
+        const images = upload.cachedFileArray || [];
+        if (content || images.length > 0) {
+            socket.emit('client_send_message', {
+                content: content,
+                images: images
+            })
+            e.target.elements.content.value = ''
+            upload.resetPreviewPanel(); // clear all selected images (file upload with preview)
+        }
+    })
+}
 // END_CLIENT_SEND_MESSAGE
 
 
@@ -76,7 +78,6 @@ document.querySelector('emoji-picker')
         const innerInput = bodyInput.querySelector('input')
         innerInput.value = innerInput.value + emoji
     });
-
 // emoji 
 
 // typing 
