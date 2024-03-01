@@ -31,5 +31,33 @@ module.exports = async (res) => {
                 })
             }
         })
+
+        socket.on('client_cancel_friend', async (data) => {
+            const myUser = res.locals.user.id
+            const existUser = await userModel.findOne({
+                _id: myUser,
+                requestFriends: data
+            })
+
+            if (existUser) {
+                await userModel.updateOne({
+                    _id: myUser
+                }, {
+                    $pull: { requestFriends: data }
+                })
+            }
+
+            const AinB = await userModel.findOne({
+                _id: data,
+                acceptFriends: myUser
+            })
+            if (AinB) {
+                await userModel.updateOne({
+                    _id: data
+                }, {
+                    $pull: { acceptFriends: myUser }
+                })
+            }
+        })
     })
 }

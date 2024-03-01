@@ -10,4 +10,17 @@ if (listAddFriend) {
         })
     });
 }
-// Kết thúc chức năng gửi yêu cầu 
+// Kết thúc chức năng gửi yêu cầu
+
+// Chức năng hủy yêu cầu kết bạn
+const listCancelFriend = document.querySelectorAll("[btn-cancel-friend]")
+if (listCancelFriend) {
+    listCancelFriend.forEach((button) => {
+        button.addEventListener("click", () => {
+            button.closest('.box-user').classList.remove('add')
+            const userID = button.getAttribute('btn-cancel-friend')
+            socket.emit('client_cancel_friend', userID)
+        })
+    })
+}
+// Kết thúc chức năng hủy yêu cầu kết bạn 
