@@ -12,7 +12,7 @@ block main
         .row 
             .col-6  
                 each user in users
-                    div(class='box-user add')
+                    div(class='box-user ')
                         div(class='inner-avatar')
                             img(
                                 src=(user.avatar ? usr.avatar : "/client/image/img2.jpg")
@@ -26,6 +26,6 @@ block main
                                         btn-unfriend-friend=user.id
                                     ) Unfriend
                                     button(
-                                        class='btn btn-sm btn-primary mr-1'
-                                        btn-success
-                                    ) Success
+                                        class='btn btn-sm btn-success mr-1'
+                                        button-success
+                                    ) Success !

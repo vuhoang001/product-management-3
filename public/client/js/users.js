@@ -58,7 +58,7 @@ if (unfriendList) {
     unfriendList.forEach(button => {
         button.addEventListener("click", () => {
             const userID = button.getAttribute('btn-unfriend-friend')
-            button.closest('.box-user').classList.remove('add')
+            button.closest('.box-user').classList.add('add')
             socket.emit('client_unfriend_friend', userID)
         })
     })
