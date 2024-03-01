@@ -24,3 +24,29 @@ if (listCancelFriend) {
     })
 }
 // Kết thúc chức năng hủy yêu cầu kết bạn 
+
+// Chức năng chấp nhận yêu cầu kết bạn 
+const listAcceptFriend = document.querySelectorAll('[btn-accept-friend]')
+if (listAcceptFriend) {
+    listAcceptFriend.forEach(button => {
+        button.addEventListener("click", () => {
+            const userID = button.getAttribute('btn-accept-friend')
+            button.closest('.box-user').classList.remove('add')
+            socket.emit('client_accept_friend', userID)
+        })
+    })
+}
+// Kết thúc chức năng chấp nhận yêu cầu kết bạn 
+
+//Chức năng hủy yêu cầu kết bạn 
+const listDeclinetFriend = document.querySelectorAll('[btn-decline-friend]')
+if (listDeclinetFriend) {
+    listDeclinetFriend.forEach(button => {
+        button.addEventListener('click', () => {
+            const userID = button.getAttribute('btn-decline-friend')
+            button.closest('.box-user').classList.remove('add')
+            socket.emit('client_decline_friend', userID)
+        })
+    })
+}
+// Kết thúc chức năng hủy yêu cầu kết bạn 

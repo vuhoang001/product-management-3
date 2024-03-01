@@ -49,3 +49,23 @@ module.exports.request = async (req, res) => {
         users: friendUser
     })
 }
+
+module.exports.requestFriend = async (req, res) => {
+    const userID = res.locals.user.id
+    const myUser = await userModel.findOne({
+        _id: userID
+    })
+    usersSocket(res)
+
+
+    const acceptFriends = myUser.acceptFriends
+    const users = await userModel.find({
+        _id: { $in: acceptFriends }
+    })
+
+
+    res.render('client/pages/users/accept.pug', {
+        pageTitle: "Friends request",
+        users: users
+    })
+}

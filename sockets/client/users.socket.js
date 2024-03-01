@@ -59,5 +59,49 @@ module.exports = async (res) => {
                 })
             }
         })
+
+        socket.on('client_accept_friend', async (data) => {
+            const userID = res.locals.user.id
+            const myUser = await userModel.findOne({
+                _id: userID
+            })
+            const acceptFriends = myUser.acceptFriends
+            const clients = await userModel.find({
+                _id: { $in: acceptFriends }
+            })
+            await userModel.updateOne({
+                _id: userID
+            }, {
+                $pull: { requestFriends: data }
+            })
+
+            await userModel.updateOne({
+                _id: userID
+            }, {
+                $push: { friendsList: data }
+            })
+
+            await userModel.updateOne({
+                _id: data
+            }, {
+                $pull: { requestFriends: userID }
+            })
+        })
+
+        socket.on('client_decline_friend', async (data) => {
+            const userID = res.locals.user.id
+
+            await userModel.updateOne({
+                _id: userID
+            }, {
+                $pull: { acceptFriends: data }
+            })
+
+            await userModel.updateOne({
+                _id: data
+            }, {
+                $pull: { requestFriends: userID }
+            })
+        })
     })
 }

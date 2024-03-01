@@ -524,11 +524,22 @@
   display: none;
 }
 
-.box-user.add [btn-add-friend] {
+.box-user.add [btn-add-friend]{
   display: none;
 }
 
 .box-user.add [btn-cancel-friend] {
   display: inline-block
+}
+
+.box-user.add [btn-accept-friend], .box-user.add [btn-decline-friend]{
+  display: inline-block
+}
+
+.box-user [btn-accept-friend], .box-user [btn-decline-friend]{
+  display: none
+}
+.box-user.add [btn-success] {
+  display: none
 }
 /* end box-user  */
