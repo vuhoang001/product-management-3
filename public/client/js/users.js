@@ -29,9 +29,9 @@ if (listCancelFriend) {
 const listAcceptFriend = document.querySelectorAll('[btn-accept-friend]')
 if (listAcceptFriend) {
     listAcceptFriend.forEach(button => {
-        button.addEventListener("click", () => {
-            const userID = button.getAttribute('btn-accept-friend')
+        button.addEventListener('click', () => {
             button.closest('.box-user').classList.remove('add')
+            const userID = button.getAttribute('btn-accept-friend')
             socket.emit('client_accept_friend', userID)
         })
     })
@@ -50,3 +50,17 @@ if (listDeclinetFriend) {
     })
 }
 // Kết thúc chức năng hủy yêu cầu kết bạn 
+
+
+// Chức năng hủy kết bạn 
+const unfriendList = document.querySelectorAll("[btn-unfriend-friend]")
+if (unfriendList) {
+    unfriendList.forEach(button => {
+        button.addEventListener("click", () => {
+            const userID = button.getAttribute('btn-unfriend-friend')
+            button.closest('.box-user').classList.remove('add')
+            socket.emit('client_unfriend_friend', userID)
+        })
+    })
+}
+// Kết thúc chức năng hủy kết bạn 

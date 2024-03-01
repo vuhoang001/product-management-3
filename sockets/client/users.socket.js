@@ -60,34 +60,6 @@ module.exports = async (res) => {
             }
         })
 
-        socket.on('client_accept_friend', async (data) => {
-            const userID = res.locals.user.id
-            const myUser = await userModel.findOne({
-                _id: userID
-            })
-            const acceptFriends = myUser.acceptFriends
-            const clients = await userModel.find({
-                _id: { $in: acceptFriends }
-            })
-            await userModel.updateOne({
-                _id: userID
-            }, {
-                $pull: { requestFriends: data }
-            })
-
-            await userModel.updateOne({
-                _id: userID
-            }, {
-                $push: { friendsList: data }
-            })
-
-            await userModel.updateOne({
-                _id: data
-            }, {
-                $pull: { requestFriends: userID }
-            })
-        })
-
         socket.on('client_decline_friend', async (data) => {
             const userID = res.locals.user.id
 
@@ -101,6 +73,48 @@ module.exports = async (res) => {
                 _id: data
             }, {
                 $pull: { requestFriends: userID }
+            })
+        })
+
+        socket.on('client_accept_friend', async (data) => {
+            userID = res.locals.user.id
+            await userModel.updateOne({
+                _id: userID
+            }, {
+                $pull: { acceptFriends: data },
+                $push: {
+                    friendsList: {
+                        user_id: data,
+                        room_chat_id: ""
+                    }
+                }
+            })
+
+            await userModel.updateOne({
+                _id: data
+            }, {
+                $pull: { requestFriends: userID },
+                $push: {
+                    friendsList: {
+                        user_id: userID,
+                        room_chat_id: ""
+                    }
+                }
+            })
+        })
+
+        socket.on('client_unfriend_friend', async (data) => {
+            const userID = res.locals.user.id
+            await userModel.updateOne({
+                _id: userID
+            }, {
+                $pull: { friendsList: { user_id: data } }
+            })
+
+            await userModel.updateOne({
+                _id: data
+            }, {
+                $pull: { friendsList: { user_id: userID } }
             })
         })
     })

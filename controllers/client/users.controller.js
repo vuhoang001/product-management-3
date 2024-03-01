@@ -50,6 +50,7 @@ module.exports.request = async (req, res) => {
     })
 }
 
+// [GET] users/accept 
 module.exports.requestFriend = async (req, res) => {
     const userID = res.locals.user.id
     const myUser = await userModel.findOne({
@@ -66,6 +67,28 @@ module.exports.requestFriend = async (req, res) => {
 
     res.render('client/pages/users/accept.pug', {
         pageTitle: "Friends request",
+        users: users
+    })
+}
+
+// [GET] users/friend 
+module.exports.friend = async (req, res) => {
+    const userID = res.locals.user.id
+    const myUser = await userModel.findOne({
+        _id: userID
+    })
+    usersSocket(res)
+    const arrayID = []
+    for (const id of myUser.friendsList) {
+        arrayID.push(id.user_id)
+    }
+
+    const users = await userModel.find({
+        _id: { $in: arrayID }
+    })
+
+    res.render('client/pages/users/friends.pug', {
+        pageTitle: "Friends",
         users: users
     })
 }
