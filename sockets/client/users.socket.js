@@ -30,6 +30,17 @@ module.exports = async (res) => {
                     $push: { requestFriends: clientUser }
                 })
             }
+
+            const infoUserB = await userModel.findOne({
+                _id: clientUser
+            })
+
+
+            const acceptFriendsLength = infoUserB.acceptFriends.length
+            socket.broadcast.emit('server_return_length_accept', {
+                userID: clientUser,
+                lengthAcceptFriend: acceptFriendsLength
+            })
         })
 
         socket.on('client_cancel_friend', async (data) => {

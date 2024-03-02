@@ -64,3 +64,14 @@ if (unfriendList) {
     })
 }
 // Kết thúc chức năng hủy kết bạn 
+
+
+// Server trả về độ dài acceptFriends + userID
+socket.on('server_return_length_accept', (data) => {
+    const badge = document.querySelector('[badge-user-accept]')
+    const userID = badge.getAttribute('badge-user-accept')
+    if (userID == data.userID) {
+        badge.innerHTML = data.lengthAcceptFriend
+    }
+})
+// Kết thúc Server trả về độ dài acceptFriends + userID
